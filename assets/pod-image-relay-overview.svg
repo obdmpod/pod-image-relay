@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
   <title id="title">Pod Image Relay application overview</title>
-  <desc id="desc">Cretched sends a GIF from a browser extension through a WebSocket relay to Mike's Windows Podcast Device app, where the image appears in Section C.</desc>
+  <desc id="desc">Cretched sends a GIF from a browser extension through a WebSocket relay to Mike's Windows Podcast Device app, where the image appears in Images and Animated GIFs.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0f172a"/>
@@ -85,23 +85,25 @@
     <text x="1091" y="184" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700">Go</text>
 
     <rect x="764" y="222" width="270" height="340" rx="10" fill="url(#columnA)"/>
-    <text x="784" y="254" fill="#0f172a" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Column A</text>
-    <text x="784" y="281" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Real embedded browser</text>
+    <text x="784" y="254" fill="#0f172a" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Web Browser</text>
+    <text x="784" y="281" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Real embedded web pages</text>
     <rect x="786" y="314" width="226" height="124" rx="16" fill="#ffffff" stroke="#bfdbfe"/>
     <rect x="806" y="336" width="118" height="14" rx="7" fill="#93c5fd"/>
     <rect x="806" y="364" width="176" height="10" rx="5" fill="#cbd5e1"/>
     <rect x="806" y="386" width="154" height="10" rx="5" fill="#cbd5e1"/>
     <rect x="806" y="408" width="98" height="10" rx="5" fill="#cbd5e1"/>
-    <text x="784" y="500" fill="#1d4ed8" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Can be covered by Section C</text>
+    <text x="784" y="500" fill="#1d4ed8" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Can be covered by GIFs</text>
     <text x="784" y="523" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13">when Mike showcases the GIF.</text>
 
     <rect x="1050" y="222" width="130" height="196" rx="10" fill="#8b6f4a"/>
-    <text x="1066" y="255" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Column B</text>
-    <text x="1066" y="282" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">notes, stats, chat,</text>
-    <text x="1066" y="302" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">overlay controls</text>
+    <text x="1062" y="250" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Streamlabs</text>
+    <text x="1062" y="274" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">Webcams</text>
+    <text x="1062" y="296" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">Overlay</text>
+    <text x="1062" y="318" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">Chat</text>
 
     <rect x="1050" y="434" width="130" height="128" rx="10" fill="url(#gifBlue)" stroke="#0ea5e9" stroke-width="4"/>
-    <text x="1066" y="462" fill="#083344" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Section C</text>
+    <text x="1064" y="460" fill="#083344" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Images /</text>
+    <text x="1064" y="478" fill="#083344" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Animated GIFs</text>
     <rect x="1080" y="482" width="70" height="46" rx="10" fill="#f8fafc"/>
     <circle cx="1102" cy="502" r="9" fill="#f97316"/>
     <path d="M1085 523 L1102 508 L1117 521 L1126 512 L1146 528 H1085 Z" fill="#22c55e"/>
@@ -109,6 +111,6 @@
     <text x="1159" y="453" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">+</text>
   </g>
 
-  <text x="724" y="642" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">4. Mike sees it live in Section C</text>
-  <text x="724" y="668" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="14">The small + button can showcase the image over Column A.</text>
+  <text x="724" y="642" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">4. Mike sees it live in Images / Animated GIFs</text>
+  <text x="724" y="668" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="14">The small + button can showcase the image over the Web Browser.</text>
 </svg>

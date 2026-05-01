@@ -11,11 +11,11 @@ extension.
 When everything is running:
 
 - Mike opens the Podcast Device app on Windows 11.
-- Column A is a real embedded browser for websites such as YouTube, X/Twitter, docs, show notes, or search.
-- Column B is Mike's stream-side utility area.
-- Section C is the GIF/image area that Cretched can update remotely.
+- Web Browser is a real embedded browser for websites such as YouTube, X/Twitter, docs, show notes, or search.
+- Streamlabs / Webcams / Overlay / Chat is Mike's stream-side utility area.
+- Images / Animated GIFs is the media area that Cretched can update remotely.
 - Cretched drags an image or GIF into his extension popup.
-- The relay forwards it to Mike's app, and Section C updates live on stream.
+- The relay forwards it to Mike's app, and Images / Animated GIFs updates live on stream.
 
 ![Pod Image Relay application overview](./assets/pod-image-relay-overview.svg)
 
@@ -35,9 +35,9 @@ flowchart LR
 
     subgraph M["Mike's Windows 11 Computer"]
         APP["podcast-device-app\nElectron desktop app"]
-        A["Column A\nembedded browser"]
-        B["Column B\ncontrols / notes / stats"]
-        GIF["Section C\nremote GIF/image area"]
+        A["Web Browser\nembedded web pages"]
+        B["Streamlabs / Webcams /\nOverlay / Chat"]
+        GIF["Images / Animated GIFs\nremote media area"]
         APP --> A
         APP --> B
         APP --> GIF
@@ -99,11 +99,11 @@ The app saves Mike's relay server and room locally. The shared token is encrypte
 
 ## Mike Usage
 
-- Use the URL bar to browse in Column A.
+- Use the URL bar to browse in Web Browser.
 - Use `Ctrl + +`, `Ctrl + -`, and `Ctrl + 0` to zoom the embedded browser.
-- Drag the splitters to resize Column B and Section C.
-- Click the small `+` button on Section C to showcase the GIF/image in Column A's space.
-- Click `-`, the image, or the showcased area to return it to Section C.
+- Drag the splitters to resize Streamlabs / Webcams / Overlay / Chat and Images / Animated GIFs.
+- Click the small `+` button on Images / Animated GIFs to showcase the GIF/image in the Web Browser space.
+- Click `-`, the image, or the showcased area to return it to Images / Animated GIFs.
 - Use fullscreen for streaming; the app chrome hides until the mouse moves near the top edge.
 
 ## Cretched Setup
@@ -150,7 +150,7 @@ The extension stores these values in browser storage so Cretched does not need t
 
 3. The image is sent to the relay.
 
-4. Mike's app receives it and updates Section C.
+4. Mike's app receives it and updates Images / Animated GIFs.
 
 Only send images you are comfortable appearing on stream.
 
@@ -222,7 +222,7 @@ Click `Connect`.
 
 Drag a GIF or image into Cretched's extension popup.
 
-Expected result: the image appears in Mike's Section C.
+Expected result: the image appears in Mike's Images / Animated GIFs area.
 
 ## Deployment
 
