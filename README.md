@@ -21,31 +21,7 @@ When everything is running:
 
 ## Diagram
 
-```mermaid
-flowchart LR
-    subgraph C["Cretched's Computer"]
-        EXT["Chrome / Edge extension\ncretched-extension"]
-        IMG["Dragged GIF or image"]
-        IMG --> EXT
-    end
-
-    subgraph R["Hosted or Local Relay"]
-        WS["relay-server\nWebSocket room + shared token"]
-    end
-
-    subgraph M["Mike's Windows 11 Computer"]
-        APP["podcast-device-app\nElectron desktop app"]
-        A["Web Browser\nembedded web pages"]
-        B["Streamlabs / Webcams /\nOverlay / Chat"]
-        GIF["Images / Animated GIFs\nremote media area"]
-        APP --> A
-        APP --> B
-        APP --> GIF
-    end
-
-    EXT -- "sender: room + token" --> WS
-    WS -- "receiver: matching room + token" --> APP
-```
+![Pod Image Relay flow diagram](./assets/pod-image-relay-flow.svg)
 
 ## Project Pieces
 
