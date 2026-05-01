@@ -1,0 +1,39 @@
+# /etc/caddy/Caddyfile
+#
+# Replace podcast.example.com with your real domain before `systemctl reload caddy`.
+# Caddy will automatically obtain and renew a Let's Encrypt certificate.
+
+podcast.example.com {
+    # Tighten headers a bit for any HTTP responses we serve.
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "no-referrer"
+        # Deny framing the health endpoint.
+        X-Frame-Options "DENY"
+    }
+
+    # Reverse-proxy everything (HTTP health checks and WebSocket upgrades alike)
+    # to the Node relay listening on localhost:8080.
+    # Caddy handles the Upgrade/Connection headers for WebSockets automatically.
+    reverse_proxy 127.0.0.1:8080 {
+        # Keep long-lived WebSockets open. Adjust if you expect idle periods > 1 h.
+        transport http {
+            read_timeout 1h
+            write_timeout 1h
+        }
+    }
+
+    log {
+        output file /var/log/caddy/podcast-relay.log {
+            roll_size 10mb
+            roll_keep 5
+        }
+        format console
+    }
+}
+
+# Optional: redirect the bare IP or any other Host to the canonical name.
+# :80, :443 {
+#     redir https://podcast.example.com{uri}
+# }

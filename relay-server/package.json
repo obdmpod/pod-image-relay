@@ -1,0 +1,13 @@
+{
+  "name": "podcast-relay-server",
+  "version": "0.1.0",
+  "description": "Tiny WebSocket relay that forwards messages from 'sender' clients (Cretched) to 'receiver' clients (Mike) within the same room.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/server.test.js"
+  },
+  "dependencies": {
+    "ws": "^8.17.0"
+  }
+}

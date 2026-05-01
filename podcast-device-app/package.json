@@ -1,0 +1,13 @@
+{
+  "name": "podcast-device-app",
+  "version": "0.1.0",
+  "description": "Mike's Podcast Device: a three-pane Electron app that embeds a real browser view in Column A and shows remotely-controlled GIFs in the bottom-right.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/run-tests.js"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}

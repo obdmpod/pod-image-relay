@@ -1,0 +1,49 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+*.exe
+*.dmg
+*.AppImage
+*.snap
+*.deb
+*.rpm
+*.zip
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Electron user data (if app is run from the repo)
+/podcast-device-app/userData/
+
+# Logs
+*.log
+logs/
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Chrome extension packaging artifacts
+/cretched-extension/*.zip
+/cretched-extension/*.crx
+/cretched-extension/*.pem

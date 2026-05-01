@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Podcast Device</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="tab-strip">
+      <div id="tabs" class="tabs"></div>
+      <button id="new-tab" class="new-tab" title="New tab">+</button>
+    </div>
+
+    <div class="top-bar">
+      <button id="back" class="nav-btn" title="Back">&#x2190;</button>
+      <button id="forward" class="nav-btn" title="Forward">&#x2192;</button>
+      <button id="reload" class="nav-btn" title="Reload">&#x21BB;</button>
+      <input id="url-bar" type="text" placeholder="Enter URL or search" />
+      <button id="go">Go</button>
+      <span class="sep"></span>
+      <div id="relay-controls" class="relay-controls">
+        <button id="toggle-relay" class="privacy-toggle" title="Hide relay details">Hide</button>
+        <div id="relay-fields" class="relay-fields">
+          <label class="relay-field">
+            <span>Server</span>
+            <input id="server" type="password" placeholder="Relay server" value="ws://localhost:8080" autocomplete="off" spellcheck="false" />
+          </label>
+          <label class="relay-field">
+            <span>Room</span>
+            <input id="room" type="password" placeholder="Room code" value="mike-cretched-1" autocomplete="off" spellcheck="false" />
+          </label>
+          <label class="relay-field">
+            <span>Token</span>
+            <input id="token" type="password" placeholder="Shared token" autocomplete="off" spellcheck="false" />
+          </label>
+        </div>
+        <button id="connect">Connect</button>
+        <span id="status" class="status">disconnected</span>
+      </div>
+      <div id="relay-summary" class="relay-summary hidden">
+        <button id="show-relay" class="privacy-toggle" title="Show relay setup">Show Relay</button>
+        <span id="summary-status" class="status">disconnected</span>
+      </div>
+      <span class="sep"></span>
+      <label>Col B <input id="col-b-color" type="color" value="#8B6F4E" /></label>
+      <label>GIF <input id="gif-color" type="color" value="#7FC8E0" /></label>
+      <label>Border <input id="gif-border" type="number" min="0" max="40" value="4" style="width:48px" /></label>
+    </div>
+
+    <div class="main">
+      <div id="column-a" class="column-a"></div>
+
+      <div id="splitter-h" class="splitter-h"></div>
+
+      <div id="column-b" class="column-b">
+        <div id="column-b-content" class="column-b-content">
+          <strong>Column B</strong>
+          <div style="margin-top:8px;font-weight:normal;opacity:.85">
+            (your stats, chat, notes, overlay controls, etc.)
+          </div>
+        </div>
+
+        <div id="splitter-v" class="splitter-v"></div>
+
+        <div id="gif-area" class="gif-area">
+          <img id="gif-img" alt="" />
+          <button id="gif-showcase" class="gif-showcase" title="Show in main area">+</button>
+          <div id="gif-placeholder" class="gif-placeholder">
+            Waiting for Cretched to send a GIF...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

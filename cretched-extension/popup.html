@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { width: 340px; font-family: system-ui, sans-serif; padding: 12px; }
+    h3   { margin: 0 0 8px 0; font-size: 14px; }
+    label { display: block; font-size: 11px; color: #555; margin-top: 8px; }
+    input { width: 100%; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+    button { padding: 6px 12px; margin-top: 8px; cursor: pointer; }
+    #drop {
+      margin-top: 12px;
+      border: 2px dashed #888;
+      border-radius: 8px;
+      padding: 32px 10px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      transition: all .15s;
+    }
+    #drop.hover { border-color: #2196F3; background: #E3F2FD; color: #1565C0; }
+    #status { font-size: 11px; color: #666; margin-top: 8px; min-height: 14px; }
+    #status.ok  { color: #2e7d32; }
+    #status.err { color: #c62828; }
+    #preview { margin-top: 8px; max-width: 100%; display: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h3>Podcast Device Controller</h3>
+
+  <label>Relay server</label>
+  <input id="server" type="text" value="ws://YOUR_RELAY_HOST:8080" />
+
+  <label>Room code (must match Mike's)</label>
+  <input id="room" type="text" value="mike-cretched-1" />
+
+  <label>Shared token</label>
+  <input id="token" type="password" placeholder="Shared token" />
+
+  <button id="connect">Connect</button>
+
+  <div id="drop">Drag a GIF / image here</div>
+
+  <img id="preview" />
+  <div id="status">disconnected</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

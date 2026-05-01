@@ -1,0 +1,45 @@
+[Unit]
+Description=Podcast Device WebSocket relay
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/podcast-relay
+EnvironmentFile=/opt/podcast-relay/.env
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=3
+# If the process floods the journal, cap its own logging.
+LimitNOFILE=65536
+
+# --- Hardening ---
+# Docs: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources @mount @obsolete @reboot @swap
+# Node needs to be able to write to its cwd only if you're using on-disk caches.
+# Otherwise leave ReadWritePaths empty — ProtectSystem=strict makes / read-only.
+ReadWritePaths=
+
+[Install]
+WantedBy=multi-user.target
