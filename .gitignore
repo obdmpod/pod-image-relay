@@ -4,6 +4,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
 # Build outputs
 dist/
@@ -16,18 +17,56 @@ out/
 *.deb
 *.rpm
 *.zip
+*.tgz
 
 # Env / secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 *.pem
 *.key
+
+# Runtime / logs
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Test / coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Tool caches
+.cache/
+.parcel-cache/
+.vite/
+*.tsbuildinfo
+.npm/
+.eslintcache
+.stylelintcache
+.node_repl_history
+
+# Framework build/cache folders
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.docusaurus/
+.serverless/
+.firebase/
+.temp/
+**/.vitepress/dist
+**/.vitepress/cache
 
 # Editor / OS
 .DS_Store
 Thumbs.db
 .vscode/
+.vscode-test/
 .idea/
 *.swp
 *.swo
@@ -35,15 +74,17 @@ Thumbs.db
 # Electron user data (if app is run from the repo)
 /podcast-device-app/userData/
 
-# Logs
-*.log
-logs/
-
-# Test / coverage
-coverage/
-.nyc_output/
-
 # Chrome extension packaging artifacts
 /cretched-extension/*.zip
 /cretched-extension/*.crx
 /cretched-extension/*.pem
+
+# Package manager stores
+.pnpm-store/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
