@@ -19,10 +19,6 @@ When everything is running:
 
 ![Pod Image Relay application overview](./assets/pod-image-relay-overview.svg)
 
-## Diagram
-
-![Pod Image Relay flow diagram](./assets/pod-image-relay-flow.svg)
-
 ## Project Pieces
 
 - `podcast-device-app/` is Mike's Electron app.
