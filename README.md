@@ -17,6 +17,8 @@ When everything is running:
 - Cretched drags an image or GIF into his extension popup.
 - The relay forwards it to Mike's app, and Section C updates live on stream.
 
+![Pod Image Relay application overview](./assets/pod-image-relay-overview.svg)
+
 ## Diagram
 
 ```mermaid

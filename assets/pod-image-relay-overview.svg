@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Pod Image Relay application overview</title>
+  <desc id="desc">Cretched sends a GIF from a browser extension through a WebSocket relay to Mike's Windows Podcast Device app, where the image appears in Section C.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.52" stop-color="#172033"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="appChrome" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1f2937"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="columnA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="gifBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="118" cy="105" r="150" fill="#0ea5e9" opacity="0.12"/>
+  <circle cx="1108" cy="608" r="190" fill="#f59e0b" opacity="0.1"/>
+
+  <text x="64" y="64" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Pod Image Relay</text>
+  <text x="64" y="96" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Cretched sends images to Mike's stream layout in real time.</text>
+
+  <!-- Cretched sender card -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="166" width="270" height="380" rx="26" fill="#f8fafc"/>
+    <rect x="84" y="196" width="222" height="282" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect x="84" y="196" width="222" height="46" rx="18" fill="#1e293b"/>
+    <text x="106" y="225" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Cretched extension</text>
+    <text x="104" y="270" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">Relay server</text>
+    <rect x="104" y="281" width="182" height="26" rx="8" fill="#e2e8f0"/>
+    <text x="116" y="299" fill="#475569" font-family="Consolas, monospace" font-size="12">wss://relay...</text>
+    <text x="104" y="332" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">Room + token</text>
+    <rect x="104" y="343" width="84" height="26" rx="8" fill="#e2e8f0"/>
+    <rect x="198" y="343" width="88" height="26" rx="8" fill="#e2e8f0"/>
+    <text x="116" y="361" fill="#475569" font-family="Consolas, monospace" font-size="11">studio</text>
+    <text x="212" y="361" fill="#475569" font-family="Consolas, monospace" font-size="11">masked</text>
+    <rect x="104" y="392" width="182" height="64" rx="14" fill="#eff6ff" stroke="#60a5fa" stroke-dasharray="6 5"/>
+    <text x="132" y="419" fill="#1d4ed8" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Drag GIF here</text>
+    <text x="128" y="441" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="12">Cretched sends image</text>
+    <rect x="113" y="497" width="164" height="34" rx="17" fill="#22c55e"/>
+    <text x="156" y="519" fill="#052e16" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Connected</text>
+    <text x="60" y="590" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">1. Cretched picks a GIF</text>
+    <text x="60" y="616" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="14">The extension keeps the relay settings saved.</text>
+  </g>
+
+  <!-- Relay -->
+  <g filter="url(#shadow)">
+    <rect x="438" y="255" width="180" height="142" rx="24" fill="#111827" stroke="#fbbf24" stroke-width="3"/>
+    <circle cx="528" cy="301" r="28" fill="#fbbf24"/>
+    <path d="M512 301 h32 M528 285 v32" stroke="#111827" stroke-width="5" stroke-linecap="round"/>
+    <text x="486" y="351" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Relay</text>
+    <text x="468" y="375" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="13">room + token gate</text>
+  </g>
+
+  <line x1="330" y1="346" x2="430" y2="326" stroke="#fbbf24" stroke-width="5" marker-end="url(#arrow)"/>
+  <line x1="620" y1="326" x2="725" y2="326" stroke="#fbbf24" stroke-width="5" marker-end="url(#arrow)"/>
+  <text x="365" y="290" fill="#fde68a" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">2. WebSocket send</text>
+  <text x="622" y="290" fill="#fde68a" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">3. Relay forwards</text>
+
+  <!-- Mike app -->
+  <g filter="url(#shadow)">
+    <rect x="724" y="132" width="496" height="470" rx="24" fill="#020617"/>
+    <rect x="744" y="154" width="456" height="428" rx="16" fill="#111827"/>
+    <rect x="744" y="154" width="456" height="50" rx="16" fill="url(#appChrome)"/>
+    <circle cx="769" cy="179" r="6" fill="#ef4444"/>
+    <circle cx="790" cy="179" r="6" fill="#f59e0b"/>
+    <circle cx="811" cy="179" r="6" fill="#22c55e"/>
+    <rect x="836" y="166" width="220" height="26" rx="9" fill="#374151"/>
+    <text x="850" y="184" fill="#d1d5db" font-family="Consolas, monospace" font-size="12">https://youtube.com</text>
+    <rect x="1068" y="166" width="76" height="26" rx="9" fill="#2563eb"/>
+    <text x="1091" y="184" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700">Go</text>
+
+    <rect x="764" y="222" width="270" height="340" rx="10" fill="url(#columnA)"/>
+    <text x="784" y="254" fill="#0f172a" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Column A</text>
+    <text x="784" y="281" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Real embedded browser</text>
+    <rect x="786" y="314" width="226" height="124" rx="16" fill="#ffffff" stroke="#bfdbfe"/>
+    <rect x="806" y="336" width="118" height="14" rx="7" fill="#93c5fd"/>
+    <rect x="806" y="364" width="176" height="10" rx="5" fill="#cbd5e1"/>
+    <rect x="806" y="386" width="154" height="10" rx="5" fill="#cbd5e1"/>
+    <rect x="806" y="408" width="98" height="10" rx="5" fill="#cbd5e1"/>
+    <text x="784" y="500" fill="#1d4ed8" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Can be covered by Section C</text>
+    <text x="784" y="523" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13">when Mike showcases the GIF.</text>
+
+    <rect x="1050" y="222" width="130" height="196" rx="10" fill="#8b6f4a"/>
+    <text x="1066" y="255" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Column B</text>
+    <text x="1066" y="282" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">notes, stats, chat,</text>
+    <text x="1066" y="302" fill="#fef3c7" font-family="Segoe UI, Arial, sans-serif" font-size="12">overlay controls</text>
+
+    <rect x="1050" y="434" width="130" height="128" rx="10" fill="url(#gifBlue)" stroke="#0ea5e9" stroke-width="4"/>
+    <text x="1066" y="462" fill="#083344" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Section C</text>
+    <rect x="1080" y="482" width="70" height="46" rx="10" fill="#f8fafc"/>
+    <circle cx="1102" cy="502" r="9" fill="#f97316"/>
+    <path d="M1085 523 L1102 508 L1117 521 L1126 512 L1146 528 H1085 Z" fill="#22c55e"/>
+    <circle cx="1164" cy="448" r="14" fill="#0f172a" opacity="0.72"/>
+    <text x="1159" y="453" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">+</text>
+  </g>
+
+  <text x="724" y="642" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">4. Mike sees it live in Section C</text>
+  <text x="724" y="668" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="14">The small + button can showcase the image over Column A.</text>
+</svg>
