@@ -29,6 +29,11 @@ const DEFAULT_CONFIG = {
     room: 'mike-cretched-1',
     token: '',
   },
+  appearance: {
+    columnBColor: '#151922',
+    gifColor: '#0F2530',
+    gifBorder: 2,
+  },
 };
 
 function send(channel, payload) {
@@ -131,8 +136,30 @@ function handleZoomShortcut(input, fallbackWebContents) {
   return false;
 }
 
+function handleBrowserUiShortcut(input) {
+  if (!input || input.type !== 'keyDown') {
+    return false;
+  }
+
+  const key = String(input.key || '').toLowerCase();
+  const code = String(input.code || '');
+  const wantsUrlBar = ((input.control || input.meta) && key === 'l') || code === 'F6';
+
+  if (wantsUrlBar) {
+    send('focus-url-bar');
+    return true;
+  }
+
+  return false;
+}
+
 function registerBrowserShortcuts(wc) {
   wc.on('before-input-event', (event, input) => {
+    if (handleBrowserUiShortcut(input)) {
+      event.preventDefault();
+      return;
+    }
+
     if (handleZoomShortcut(input, wc)) {
       event.preventDefault();
     }
@@ -163,9 +190,23 @@ function decryptToken(encryptedToken) {
   }
 }
 
+function normalizedColor(value, fallback) {
+  return /^#[0-9a-f]{6}$/i.test(String(value || '')) ? value : fallback;
+}
+
+function normalizedBorder(value, fallback) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+
+  return Math.min(40, Math.max(0, Math.round(parsed)));
+}
+
 function loadAppConfig() {
   const stored = readConfigFile();
   const relay = stored.relay || {};
+  const appearance = stored.appearance || {};
 
   return {
     relay: {
@@ -175,6 +216,11 @@ function loadAppConfig() {
       hasEncryptedToken: Boolean(relay.encryptedToken),
       tokenStoredSecurely: Boolean(relay.encryptedToken && safeStorage.isEncryptionAvailable()),
     },
+    appearance: {
+      columnBColor: normalizedColor(appearance.columnBColor, DEFAULT_CONFIG.appearance.columnBColor),
+      gifColor: normalizedColor(appearance.gifColor, DEFAULT_CONFIG.appearance.gifColor),
+      gifBorder: normalizedBorder(appearance.gifBorder, DEFAULT_CONFIG.appearance.gifBorder),
+    },
   };
 }
 
@@ -182,11 +228,15 @@ function saveAppConfig(nextConfig = {}) {
   const current = readConfigFile();
   const currentRelay = current.relay || {};
   const nextRelay = nextConfig.relay || {};
-  const relay = {
-    ...currentRelay,
-    server: String(nextRelay.server || '').trim() || DEFAULT_CONFIG.relay.server,
-    room: String(nextRelay.room || '').trim() || DEFAULT_CONFIG.relay.room,
-  };
+  const relay = { ...currentRelay };
+
+  if (Object.prototype.hasOwnProperty.call(nextRelay, 'server')) {
+    relay.server = String(nextRelay.server || '').trim() || DEFAULT_CONFIG.relay.server;
+  }
+
+  if (Object.prototype.hasOwnProperty.call(nextRelay, 'room')) {
+    relay.room = String(nextRelay.room || '').trim() || DEFAULT_CONFIG.relay.room;
+  }
 
   if (typeof nextRelay.token === 'string') {
     const token = nextRelay.token.trim();
@@ -197,8 +247,26 @@ function saveAppConfig(nextConfig = {}) {
     }
   }
 
+  const currentAppearance = current.appearance || {};
+  const nextAppearance = nextConfig.appearance || {};
+  const appearance = {
+    ...currentAppearance,
+  };
+
+  if (Object.prototype.hasOwnProperty.call(nextAppearance, 'columnBColor')) {
+    appearance.columnBColor = normalizedColor(nextAppearance.columnBColor, DEFAULT_CONFIG.appearance.columnBColor);
+  }
+
+  if (Object.prototype.hasOwnProperty.call(nextAppearance, 'gifColor')) {
+    appearance.gifColor = normalizedColor(nextAppearance.gifColor, DEFAULT_CONFIG.appearance.gifColor);
+  }
+
+  if (Object.prototype.hasOwnProperty.call(nextAppearance, 'gifBorder')) {
+    appearance.gifBorder = normalizedBorder(nextAppearance.gifBorder, DEFAULT_CONFIG.appearance.gifBorder);
+  }
+
   fs.mkdirSync(path.dirname(configPath()), { recursive: true });
-  fs.writeFileSync(configPath(), JSON.stringify({ ...current, relay }, null, 2));
+  fs.writeFileSync(path.join(app.getPath('userData'), CONFIG_FILE), JSON.stringify({ ...current, relay, appearance }, null, 2));
   return loadAppConfig();
 }
 

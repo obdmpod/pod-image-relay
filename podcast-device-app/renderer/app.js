@@ -9,6 +9,7 @@
 // ---------- DOM handles ----------
 const columnA = document.getElementById('column-a');
 const columnB = document.getElementById('column-b');
+const columnBContent = document.getElementById('column-b-content');
 const gifArea = document.getElementById('gif-area');
 const gifImg = document.getElementById('gif-img');
 const gifShowcaseBtn = document.getElementById('gif-showcase');
@@ -162,6 +163,13 @@ function setFullscreenChromeVisible(isVisible) {
   appEl.classList.toggle('chrome-visible', isVisible);
 }
 
+function focusUrlBar() {
+  setFullscreenChromeVisible(true);
+  clearTimeout(chromeRevealTimer);
+  urlBar.focus();
+  urlBar.select();
+}
+
 function setFullscreenMode(nextIsFullscreen) {
   isFullscreen = nextIsFullscreen;
   appEl.classList.toggle('fullscreen-ui', nextIsFullscreen);
@@ -214,20 +222,27 @@ document.addEventListener('mousemove', (event) => {
     return;
   }
 
-  const shouldRevealChrome = event.clientY <= 10;
+  const shouldRevealChrome = event.clientY <= 56;
   if (shouldRevealChrome) {
     setFullscreenChromeVisible(true);
     clearTimeout(chromeRevealTimer);
     return;
   }
 
-  if (event.clientY > 92 && appEl.classList.contains('chrome-visible')) {
+  if (event.clientY > 120 && appEl.classList.contains('chrome-visible') && document.activeElement !== urlBar) {
     clearTimeout(chromeRevealTimer);
     chromeRevealTimer = setTimeout(() => setFullscreenChromeVisible(false), 450);
   }
 });
 window.podcast.onFullscreenChanged(({ isFullScreen }) => {
   setFullscreenMode(isFullScreen);
+});
+window.podcast.onFocusUrlBar(focusUrlBar);
+document.addEventListener('keydown', (event) => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'l') {
+    event.preventDefault();
+    focusUrlBar();
+  }
 });
 requestAnimationFrame(() => requestAnimationFrame(pushBounds));
 
@@ -267,12 +282,6 @@ gifShowcaseBtn.addEventListener('click', (event) => {
   setGifShowcase(!isGifShowcased);
 });
 
-gifImg.addEventListener('click', () => {
-  if (gifImg.classList.contains('visible') || isGifShowcased) {
-    setGifShowcase(!isGifShowcased);
-  }
-});
-
 featureCloseBtn.addEventListener('click', (event) => {
   event.stopPropagation();
   setGifShowcase(false);
@@ -291,15 +300,30 @@ document.addEventListener('mouseup', () => {
 
 // ---------- Style controls ----------
 colBColor.addEventListener('input', (event) => {
-  document.getElementById('column-b-content').style.background = event.target.value;
+  setAppearanceVars({
+    columnBColor: event.target.value,
+    gifColor: gifColor.value,
+    gifBorder: parseInt(gifBorder.value, 10) || 0,
+  });
+  saveAppearanceConfig();
 });
 
 gifColor.addEventListener('input', (event) => {
-  gifArea.style.background = event.target.value;
+  setAppearanceVars({
+    columnBColor: colBColor.value,
+    gifColor: event.target.value,
+    gifBorder: parseInt(gifBorder.value, 10) || 0,
+  });
+  saveAppearanceConfig();
 });
 
 gifBorder.addEventListener('input', (event) => {
-  gifArea.style.borderWidth = Math.max(0, parseInt(event.target.value, 10) || 0) + 'px';
+  setAppearanceVars({
+    columnBColor: colBColor.value,
+    gifColor: gifColor.value,
+    gifBorder: Math.max(0, parseInt(event.target.value, 10) || 0),
+  });
+  saveAppearanceConfig();
 });
 
 // ---------- Relay connection ----------
@@ -308,6 +332,13 @@ let reconnectTimer = null;
 let reconnectAttempt = 0;
 let shouldReconnect = false;
 let currentBlobUrl = null;
+let appearanceSaveTimer = null;
+
+function setAppearanceVars({ columnBColor, gifColor: gifAreaColor, gifBorder }) {
+  document.documentElement.style.setProperty('--column-b-bg', columnBColor);
+  document.documentElement.style.setProperty('--gif-bg', gifAreaColor);
+  document.documentElement.style.setProperty('--gif-border-width', `${gifBorder}px`);
+}
 
 function setStatus(text, ok) {
   statusEl.textContent = text;
@@ -325,15 +356,48 @@ async function restoreConfig() {
   try {
     const config = await window.podcast.config.load();
     const relay = config.relay || {};
+    const appearance = config.appearance || {};
 
     serverInput.value = relay.server || serverInput.value;
     roomInput.value = relay.room || roomInput.value;
     tokenInput.value = relay.token || '';
+    applyAppearance(appearance);
 
     if (relay.server || relay.room || relay.hasEncryptedToken) {
       setRelayDetailsVisible(false);
     }
   } catch (_) {}
+}
+
+function applyAppearance(appearance) {
+  const columnBColor = appearance.columnBColor || colBColor.value;
+  const gifAreaColor = appearance.gifColor || gifColor.value;
+  const gifBorderWidth = Number.isFinite(Number(appearance.gifBorder))
+    ? Number(appearance.gifBorder)
+    : parseInt(gifBorder.value, 10);
+
+  colBColor.value = columnBColor;
+  gifColor.value = gifAreaColor;
+  gifBorder.value = Math.max(0, Math.min(40, gifBorderWidth || 0));
+
+  setAppearanceVars({
+    columnBColor: colBColor.value,
+    gifColor: gifColor.value,
+    gifBorder: parseInt(gifBorder.value, 10) || 0,
+  });
+}
+
+function saveAppearanceConfig() {
+  clearTimeout(appearanceSaveTimer);
+  appearanceSaveTimer = setTimeout(() => {
+    window.podcast.config.save({
+      appearance: {
+        columnBColor: colBColor.value,
+        gifColor: gifColor.value,
+        gifBorder: parseInt(gifBorder.value, 10) || 0,
+      },
+    }).catch(() => {});
+  }, 150);
 }
 
 function saveRelayConfig() {

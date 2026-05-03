@@ -27,4 +27,5 @@ contextBridge.exposeInMainWorld('podcast', {
   onTabActivated: (cb) => ipcRenderer.on('tab-activated', (_e, d) => cb(d)),
   onTabClosed:    (cb) => ipcRenderer.on('tab-closed',    (_e, d) => cb(d)),
   onFullscreenChanged: (cb) => ipcRenderer.on('fullscreen-changed', (_e, d) => cb(d)),
+  onFocusUrlBar: (cb) => ipcRenderer.on('focus-url-bar', () => cb()),
 });

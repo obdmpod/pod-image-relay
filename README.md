@@ -78,6 +78,7 @@ The app saves Mike's relay server and room locally. The shared token is encrypte
 - Drag the splitters to resize Streamlabs / Webcams / Overlay / Chat and Images / Animated GIFs.
 - Click the small `+` button on Images / Animated GIFs to showcase the GIF/image in the Web Browser space.
 - Click `-`, the image, or the showcased area to return it to Images / Animated GIFs.
+- Use the Col B, GIF, and Border controls to tune the stream layout colors. These choices are saved locally and restored on restart.
 - Use fullscreen for streaming; the app chrome hides until the mouse moves near the top edge.
 
 ## Cretched Setup
