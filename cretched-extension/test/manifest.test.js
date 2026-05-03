@@ -10,7 +10,8 @@ test('manifest points at the popup and requests storage permission', () => {
 
   assert.equal(manifest.manifest_version, 3);
   assert.equal(manifest.action.default_popup, 'popup.html');
-  assert.deepEqual(manifest.permissions, ['storage']);
+  assert.equal(manifest.background.service_worker, 'background.js');
+  assert.deepEqual(manifest.permissions, ['contextMenus', 'storage']);
 });
 
 test('popup contains the expected controls for relay connection and drag-drop', () => {
@@ -19,4 +20,12 @@ test('popup contains the expected controls for relay connection and drag-drop', 
   for (const id of ['server', 'room', 'token', 'connect', 'drop', 'preview', 'status']) {
     assert.match(popupHtml, new RegExp(`id="${id}"`));
   }
+});
+
+test('background registers a context menu for sending web images', () => {
+  const backgroundJs = fs.readFileSync(path.join(extensionDir, 'background.js'), 'utf8');
+
+  assert.match(backgroundJs, /chrome\.contextMenus\.create/);
+  assert.match(backgroundJs, /Send image\/GIF to Podcast Device/);
+  assert.match(backgroundJs, /gif-url/);
 });

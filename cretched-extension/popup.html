@@ -23,6 +23,7 @@
     #status.ok  { color: #2e7d32; }
     #status.err { color: #c62828; }
     #preview { margin-top: 8px; max-width: 100%; display: none; border-radius: 4px; }
+    .hint { margin: 8px 0 0; color: #666; font-size: 11px; line-height: 1.35; }
   </style>
 </head>
 <body>
@@ -39,7 +40,8 @@
 
   <button id="connect">Connect</button>
 
-  <div id="drop">Drag a GIF / image here</div>
+  <div id="drop">Drag a local GIF / image file here</div>
+  <p class="hint">For web GIFs, right-click the image on the page and choose "Send image/GIF to Podcast Device".</p>
 
   <img id="preview" />
   <div id="status">disconnected</div>

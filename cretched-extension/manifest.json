@@ -7,6 +7,9 @@
     "default_popup": "popup.html",
     "default_title": "Podcast Device Controller"
   },
-  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["contextMenus", "storage"],
   "host_permissions": []
 }

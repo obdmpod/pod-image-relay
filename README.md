@@ -63,6 +63,8 @@ npm start
 - Room: the shared room code, for example `mike-cretched-1`.
 - Token: the shared token configured on the relay.
 
+The Server and Room fields are readable while the relay controls are open so Mike can configure them. The Token field stays hidden by default, but the small `Show` / `Hide` button can temporarily reveal it during setup.
+
 5. Click `Connect`.
 
 6. Hide the relay controls before streaming so the server, room, and token are not visible.
@@ -118,11 +120,15 @@ The extension stores these values in browser storage so Cretched does not need t
 
 1. Open the extension popup.
 
-2. Drag a GIF or image into the drop area.
+2. For a GIF/image saved on the computer, drag the local file into the drop area.
 
 3. The image is sent to the relay.
 
 4. Mike's app receives it and updates Images / Animated GIFs.
+
+For a GIF/image on a webpage, do not drag it into the popup. Browser extension popups close when the page is clicked. Instead, right-click the web image and choose `Send image/GIF to Podcast Device`.
+
+The right-click command uses the saved relay settings and sends from the extension background worker, so Cretched does not need to keep the popup open or click `Connect` for every send.
 
 Only send images you are comfortable appearing on stream.
 
@@ -175,6 +181,8 @@ Use these relay settings in Mike's app:
 - Server: `ws://localhost:8080`
 - Room: `mike-cretched-1`
 - Token: `dev-token`
+
+During setup, the Server and Room fields are visible text fields. Use the Token field's `Show` / `Hide` button if you need to verify the token before connecting.
 
 Click `Connect`.
 

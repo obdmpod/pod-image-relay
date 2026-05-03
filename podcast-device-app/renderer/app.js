@@ -12,6 +12,9 @@ const columnB = document.getElementById('column-b');
 const gifArea = document.getElementById('gif-area');
 const gifImg = document.getElementById('gif-img');
 const gifShowcaseBtn = document.getElementById('gif-showcase');
+const featureOverlay = document.getElementById('feature-overlay');
+const featureImg = document.getElementById('feature-img');
+const featureCloseBtn = document.getElementById('feature-close');
 const splitterH = document.getElementById('splitter-h');
 const splitterV = document.getElementById('splitter-v');
 const urlBar = document.getElementById('url-bar');
@@ -22,6 +25,7 @@ const reloadBtn = document.getElementById('reload');
 const serverInput = document.getElementById('server');
 const roomInput = document.getElementById('room');
 const tokenInput = document.getElementById('token');
+const toggleTokenBtn = document.getElementById('toggle-token');
 const connectBtn = document.getElementById('connect');
 const statusEl = document.getElementById('status');
 const summaryStatusEl = document.getElementById('summary-status');
@@ -172,20 +176,28 @@ function setFullscreenMode(nextIsFullscreen) {
 
 function updateGifShowcaseBounds() {
   const rect = columnA.getBoundingClientRect();
-  document.documentElement.style.setProperty('--gif-showcase-left', `${rect.left}px`);
-  document.documentElement.style.setProperty('--gif-showcase-top', `${rect.top}px`);
-  document.documentElement.style.setProperty('--gif-showcase-width', `${rect.width}px`);
-  document.documentElement.style.setProperty('--gif-showcase-height', `${rect.height}px`);
+  document.documentElement.style.setProperty('--feature-left', `${rect.left}px`);
+  document.documentElement.style.setProperty('--feature-top', `${rect.top}px`);
+  document.documentElement.style.setProperty('--feature-width', `${rect.width}px`);
+  document.documentElement.style.setProperty('--feature-height', `${rect.height}px`);
 }
 
 function setGifShowcase(isShowcased) {
+  if (isShowcased && !gifImg.classList.contains('visible')) {
+    return;
+  }
+
   isGifShowcased = isShowcased;
-  gifArea.classList.toggle('showcased', isShowcased);
+  featureOverlay.classList.toggle('hidden', !isShowcased);
+  gifArea.classList.toggle('feature-source-hidden', isShowcased);
   gifShowcaseBtn.textContent = isShowcased ? '-' : '+';
   gifShowcaseBtn.title = isShowcased ? 'Return to lower-right area' : 'Show in main area';
 
   if (isShowcased) {
     updateGifShowcaseBounds();
+    featureImg.src = gifImg.currentSrc || gifImg.src;
+  } else {
+    featureImg.removeAttribute('src');
   }
 
   pushBounds();
@@ -261,8 +273,13 @@ gifImg.addEventListener('click', () => {
   }
 });
 
-gifArea.addEventListener('click', (event) => {
-  if (isGifShowcased && event.target !== gifShowcaseBtn && event.target !== gifImg) {
+featureCloseBtn.addEventListener('click', (event) => {
+  event.stopPropagation();
+  setGifShowcase(false);
+});
+
+featureOverlay.addEventListener('click', (event) => {
+  if (event.target !== featureCloseBtn) {
     setGifShowcase(false);
   }
 });
@@ -435,6 +452,13 @@ showRelayBtn.addEventListener('click', () => {
   setRelayDetailsVisible(true);
 });
 
+toggleTokenBtn.addEventListener('click', () => {
+  const shouldShow = tokenInput.type === 'password';
+  tokenInput.type = shouldShow ? 'text' : 'password';
+  toggleTokenBtn.textContent = shouldShow ? 'Hide' : 'Show';
+  toggleTokenBtn.title = shouldShow ? 'Hide token' : 'Temporarily show token';
+});
+
 function showGif(src, { revokePrevious = false } = {}) {
   if (revokePrevious) {
     revokeCurrentBlobUrl();
@@ -446,6 +470,10 @@ function showGif(src, { revokePrevious = false } = {}) {
   gifImg.onload = () => gifArea.classList.add('has-image');
   gifImg.classList.add('visible');
   gifImg.src = src;
+
+  if (isGifShowcased) {
+    featureImg.src = src;
+  }
 }
 
 window.addEventListener('beforeunload', () => {

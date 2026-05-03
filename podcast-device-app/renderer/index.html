@@ -24,15 +24,18 @@
         <div id="relay-fields" class="relay-fields">
           <label class="relay-field">
             <span>Server</span>
-            <input id="server" type="password" placeholder="Relay server" value="ws://localhost:8080" autocomplete="off" spellcheck="false" />
+            <input id="server" type="text" placeholder="Relay server" value="ws://localhost:8080" autocomplete="off" spellcheck="false" />
           </label>
           <label class="relay-field">
             <span>Room</span>
-            <input id="room" type="password" placeholder="Room code" value="mike-cretched-1" autocomplete="off" spellcheck="false" />
+            <input id="room" type="text" placeholder="Room code" value="mike-cretched-1" autocomplete="off" spellcheck="false" />
           </label>
           <label class="relay-field">
             <span>Token</span>
-            <input id="token" type="password" placeholder="Shared token" autocomplete="off" spellcheck="false" />
+            <span class="token-control">
+              <input id="token" type="password" placeholder="Shared token" autocomplete="off" spellcheck="false" />
+              <button id="toggle-token" class="token-toggle" type="button" title="Temporarily show token">Show</button>
+            </span>
           </label>
         </div>
         <button id="connect">Connect</button>
@@ -50,25 +53,22 @@
 
     <div class="main">
       <div id="column-a" class="column-a"></div>
+      <div id="feature-overlay" class="feature-overlay hidden">
+        <img id="feature-img" alt="" />
+        <button id="feature-close" class="feature-close" title="Return to lower-right area">-</button>
+      </div>
 
       <div id="splitter-h" class="splitter-h"></div>
 
       <div id="column-b" class="column-b">
-        <div id="column-b-content" class="column-b-content">
-          <strong>Column B</strong>
-          <div style="margin-top:8px;font-weight:normal;opacity:.85">
-            (your stats, chat, notes, overlay controls, etc.)
-          </div>
-        </div>
+        <div id="column-b-content" class="column-b-content"></div>
 
         <div id="splitter-v" class="splitter-v"></div>
 
         <div id="gif-area" class="gif-area">
           <img id="gif-img" alt="" />
           <button id="gif-showcase" class="gif-showcase" title="Show in main area">+</button>
-          <div id="gif-placeholder" class="gif-placeholder">
-            Waiting for Cretched to send a GIF...
-          </div>
+          <div id="gif-placeholder" class="gif-placeholder"></div>
         </div>
       </div>
     </div>
