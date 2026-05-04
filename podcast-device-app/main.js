@@ -16,9 +16,11 @@ const { setupContentBlocking } = require('./lib/content-blocking');
 const { coerceUrl } = require('./lib/coerce-url');
 
 let mainWindow;
+let brandLogoView;
 const tabs = new Map();       // tabId -> { view, title, url }
 let activeTabId = null;
 let lastBounds = { x: 0, y: 84, width: 1200, height: 800 };
+const BRAND_LOGO_BOUNDS = { width: 230, height: 92, margin: 24 };
 const CONFIG_FILE = 'settings.json';
 const MIN_ZOOM_FACTOR = 0.25;
 const MAX_ZOOM_FACTOR = 3;
@@ -35,6 +37,8 @@ const DEFAULT_CONFIG = {
     gifBorder: 2,
   },
 };
+const BRAND_LOGO_PATH = path.join(__dirname, 'renderer', 'assets', 'obdm_logo_2026_trans.png');
+let brandLogoDataUrl = null;
 
 function send(channel, payload) {
   if (mainWindow && !mainWindow.isDestroyed()) {
@@ -203,6 +207,96 @@ function normalizedBorder(value, fallback) {
   return Math.min(40, Math.max(0, Math.round(parsed)));
 }
 
+function getBrandLogoDataUrl() {
+  if (brandLogoDataUrl !== null) {
+    return brandLogoDataUrl;
+  }
+
+  try {
+    const logo = fs.readFileSync(BRAND_LOGO_PATH);
+    brandLogoDataUrl = `data:image/png;base64,${logo.toString('base64')}`;
+  } catch (_) {
+    brandLogoDataUrl = '';
+  }
+
+  return brandLogoDataUrl;
+}
+
+function createBrandLogoView() {
+  const logoUrl = getBrandLogoDataUrl();
+  if (!logoUrl) {
+    return;
+  }
+
+  brandLogoView = new WebContentsView({
+    webPreferences: { contextIsolation: true, nodeIntegration: false },
+  });
+
+  if (typeof brandLogoView.setBackgroundColor === 'function') {
+    brandLogoView.setBackgroundColor('#00000000');
+  }
+
+  const html = `
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+          }
+          body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          @keyframes brandPulse {
+            0%, 100% {
+              opacity: .88;
+              filter: drop-shadow(0 0 4px rgba(115, 210, 255, .28));
+            }
+            50% {
+              opacity: .98;
+              filter: drop-shadow(0 0 9px rgba(218, 76, 184, .42));
+            }
+          }
+          img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            animation: brandPulse 12s ease-in-out infinite;
+          }
+        </style>
+      </head>
+      <body>
+        <img alt="OBDM" src="${logoUrl}">
+      </body>
+    </html>
+  `;
+
+  brandLogoView.webContents.loadURL(`data:text/html;charset=UTF-8,${encodeURIComponent(html)}`);
+  brandLogoView.webContents.setZoomFactor(1);
+}
+
+function updateBrandLogoBounds() {
+  if (!mainWindow || mainWindow.isDestroyed() || !brandLogoView) {
+    return;
+  }
+
+  const margin = BRAND_LOGO_BOUNDS.margin;
+  brandLogoView.setBounds({
+    x: lastBounds.x + margin,
+    y: lastBounds.y + Math.max(0, lastBounds.height - BRAND_LOGO_BOUNDS.height - margin),
+    width: BRAND_LOGO_BOUNDS.width,
+    height: BRAND_LOGO_BOUNDS.height,
+  });
+}
+
 function loadAppConfig() {
   const stored = readConfigFile();
   const relay = stored.relay || {};
@@ -322,6 +416,11 @@ function activateTab(id) {
   const { view } = tabs.get(id);
   mainWindow.contentView.addChildView(view);
   view.setBounds(lastBounds);
+  if (brandLogoView) {
+    try { mainWindow.contentView.removeChildView(brandLogoView); } catch (_) {}
+    mainWindow.contentView.addChildView(brandLogoView);
+    updateBrandLogoBounds();
+  }
   send('tab-activated', { id });
 }
 
@@ -364,6 +463,7 @@ function createWindow() {
   // Open one starter tab once the UI is ready.
   mainWindow.webContents.once('did-finish-load', () => {
     send('fullscreen-changed', { isFullScreen: mainWindow.isFullScreen() });
+    createBrandLogoView();
     createTab('https://example.com');
   });
 }
@@ -402,6 +502,7 @@ ipcMain.handle('set-bounds', (_e, bounds) => {
   if (activeTabId && tabs.has(activeTabId)) {
     tabs.get(activeTabId).view.setBounds(lastBounds);
   }
+  updateBrandLogoBounds();
 });
 
 app.whenReady().then(() => {

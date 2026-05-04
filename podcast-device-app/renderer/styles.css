@@ -146,7 +146,7 @@ html, body { height: 100vh; overflow: hidden; font-family: system-ui, sans-serif
 
 /* Column A is intentionally an empty yellow box — the real browser view
    (WebContentsView) is overlaid on top of it by the main process. */
-.column-a { flex: 1; background: #FFB300; min-width: 200px; }
+.column-a { flex: 1; background: #05070A; min-width: 200px; }
 
 .splitter-h { width: 6px; background: #000; cursor: col-resize; flex-shrink: 0; }
 .splitter-v { height: 6px; background: #000; cursor: row-resize; flex-shrink: 0; }

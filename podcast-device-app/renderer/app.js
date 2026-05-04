@@ -149,13 +149,18 @@ urlBar.addEventListener('keydown', (event) => {
 });
 
 // ---------- Keep embedded browser aligned with Column A ----------
+function getColumnABrowserRect() {
+  const rect = columnA.getBoundingClientRect();
+  return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+}
+
 function pushBounds() {
   if (isGifShowcased) {
     window.podcast.setMainBounds({ x: 0, y: 0, width: 0, height: 0 });
     return;
   }
 
-  const rect = columnA.getBoundingClientRect();
+  const rect = getColumnABrowserRect();
   window.podcast.setMainBounds({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
 }
 
@@ -183,7 +188,7 @@ function setFullscreenMode(nextIsFullscreen) {
 }
 
 function updateGifShowcaseBounds() {
-  const rect = columnA.getBoundingClientRect();
+  const rect = getColumnABrowserRect();
   document.documentElement.style.setProperty('--feature-left', `${rect.left}px`);
   document.documentElement.style.setProperty('--feature-top', `${rect.top}px`);
   document.documentElement.style.setProperty('--feature-width', `${rect.width}px`);
